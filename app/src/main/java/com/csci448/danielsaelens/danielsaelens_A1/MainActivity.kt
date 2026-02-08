@@ -9,10 +9,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -73,12 +75,13 @@ fun PizzaPartyScreen() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Number of People?")
-            Spacer(modifier = Modifier.width(15.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             TextField(
                 value = numPeople,
                 onValueChange = { numPeople = it },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.width(200.dp)
+
             )
         }
         Text("How hungry is everyone?")
@@ -96,6 +99,7 @@ fun PizzaPartyScreen() {
                 }
             }
 
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
@@ -104,21 +108,25 @@ fun PizzaPartyScreen() {
             Spacer(modifier = Modifier.width(16.dp))
 
             var expanded by remember { mutableStateOf(false) }
-            Box {
-                Row(
+            Box(modifier = Modifier.clickable { expanded = true }) {
+                TextField(
+                    value = "${pizzaOptions[selectedPizzaIndex].name} ($${String.format("%.2f", pizzaOptions[selectedPizzaIndex].price)} ea)",
+                    onValueChange = { },
+                    readOnly = true,
+                    //enabled = false,
+                    modifier = Modifier.width(280.dp),
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Dropdown arrow"
+                        )
+                    }
+                )
+                Box(
                     modifier = Modifier
+                        .matchParentSize()
                         .clickable { expanded = true }
-                        .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-                        .padding(16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("${pizzaOptions[selectedPizzaIndex].name} ($${String.format("%.2f", pizzaOptions[selectedPizzaIndex].price)} ea)")
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = "Dropdown arrow"
-                    )
-                }
+                )
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false }
@@ -156,7 +164,7 @@ fun PizzaPartyScreen() {
                 totalPizzas = kotlin.math.ceil(totalSlices / 8.0).toInt()
                 totalCost = totalPizzas * pizzaOptions[selectedPizzaIndex].price
             }) {
-                Text("Calculate")
+                Text("Calculate!")
             }
         }
         Row(
