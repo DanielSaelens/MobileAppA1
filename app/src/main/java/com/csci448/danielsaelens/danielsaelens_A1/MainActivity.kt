@@ -125,7 +125,8 @@ fun PizzaPartyScreen() {
                 ) {
                     pizzaOptions.forEachIndexed { index, pizza ->
                         DropdownMenuItem(
-                            text = { Text("${pizza.name} - $${pizza.price}") },
+                            text = { Text("${pizza.name} - $${String.format("%.2f", pizza.price)}") },
+                            //text = { Text("${pizza.name} - $${pizza.price}") },
                             onClick = {
                                 selectedPizzaIndex = index
                                 expanded = false
