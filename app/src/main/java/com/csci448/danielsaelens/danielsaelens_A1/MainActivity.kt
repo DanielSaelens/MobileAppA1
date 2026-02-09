@@ -86,7 +86,7 @@ fun PizzaPartyScreen() {
         }
         Text("How hungry is everyone?")
         val hungerOptions = listOf("Light", "Medium", "Ravenous")
-            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 hungerOptions.forEach { option ->
                     Row {
                         RadioButton(
